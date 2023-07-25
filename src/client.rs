@@ -9,8 +9,14 @@ use serde_json::{json, Value};
 use std::time::Duration;
 use tokio::runtime::Runtime;
 use tokio::time::sleep;
+use lazy_static::lazy_static;
 
-const API_URL: &str = "https://api.openai.com/v1/chat/completions";
+// static var "API_URL" read from env var "OPENAI_API_BASE" at runtime
+// if not set, use default value "https://api.openai.com/v1/chat/completions"
+lazy_static! {
+    static ref API_URL: String = std::env::var("OPENAI_API_BASE")
+        .unwrap_or_else(|_| "https://api.openai.com/v1/chat/completions".to_string());
+}
 
 #[allow(clippy::module_name_repetitions)]
 #[derive(Debug)]
@@ -157,7 +163,7 @@ impl ChatGptClient {
 
         let mut builder = self
             .build_client()?
-            .post(API_URL)
+            .post(API_URL.as_str())
             .bearer_auth(api_key)
             .json(&body);
 
