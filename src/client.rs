@@ -11,11 +11,13 @@ use tokio::runtime::Runtime;
 use tokio::time::sleep;
 use lazy_static::lazy_static;
 
-// static var "API_URL" read from env var "OPENAI_API_BASE" at runtime
-// if not set, use default value "https://api.openai.com/v1/chat/completions"
+const API_PATH: &str = "/v1/chat/completions";
+// static var "API_BASE" read from env var "OPENAI_API_BASE" at runtime
+// if not set, use default value "https://api.openai.com"
 lazy_static! {
-    static ref API_URL: String = std::env::var("OPENAI_API_BASE")
-        .unwrap_or_else(|_| "https://api.openai.com/v1/chat/completions".to_string());
+    static ref API_BASE: String = std::env::var("OPENAI_API_BASE")
+        .unwrap_or_else(|_| "https://api.openai.com".to_string());
+    static ref API_URL: String = API_BASE.to_string() + API_PATH;
 }
 
 #[allow(clippy::module_name_repetitions)]
