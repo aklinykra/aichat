@@ -15,7 +15,7 @@ const API_PATH: &str = "/v1/chat/completions";
 // static var "API_BASE" read from env var "OPENAI_API_BASE" at runtime
 // if not set, use default value "https://api.openai.com"
 lazy_static! {
-    static ref API_BASE: String = std::env::var("OPENAI_API_BASE")
+    pub static ref API_BASE: String = std::env::var("OPENAI_API_BASE")
         .unwrap_or_else(|_| "https://api.openai.com".to_string());
     static ref API_URL: String = API_BASE.to_string() + API_PATH;
 }

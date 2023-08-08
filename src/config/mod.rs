@@ -8,6 +8,7 @@ use self::role::Role;
 
 use crate::config::message::num_tokens_from_messages;
 use crate::utils::{mask_text, now};
+use crate::client::API_BASE;
 
 use anyhow::{anyhow, bail, Context, Result};
 use inquire::{Confirm, Text};
@@ -342,6 +343,7 @@ impl Config {
             ("config_file", file_info(&Self::config_file()?)),
             ("roles_file", file_info(&Self::roles_file()?)),
             ("messages_file", file_info(&Self::messages_file()?)),
+            ("api_base", API_BASE.to_string()),
             ("api_key", api_key),
             ("organization_id", organization_id),
             ("model", self.model.0.to_string()),
